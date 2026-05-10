@@ -1,226 +1,866 @@
-<!DOCTYPE html>
-<html lang="ru">
+<!DOCTYPE html><html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Modish — Одежда, которая реально вам идёт</title>
-  <meta name="description" content="Modish подбирает одежду, которая хорошо сидит, подходит по цвету и стилю. Персональные рекомендации с Wildberries, Ozon и Lamoda." />
+  <title>Modish — персональные рекомендации одежды для покупателей и магазинов</title>
+  <meta name="description" content="Modish помогает покупателям находить одежду, которая подходит по фигуре, цвету, стилю и бюджету, а магазинам — получать более качественный целевой трафик по модели CPS или партнёрского пилота." />
   <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Inter, system-ui, Arial, sans-serif;
-      background: #0f1117;
-      color: #f7f7f8;
-      line-height: 1.6;
-    }
-    .page { max-width: 1280px; margin: 0 auto; padding: 32px 20px 100px; }
+    :root {
+      --bg: #0b0d12;
+      --bg-soft: #11141c;
+      --card: rgba(255, 255, 255, 0.065);
+      --card-strong: rgba(255, 255, 255, 0.1);
+      --text: #f7f7f8;
+      --muted: #a7adbb;
+      --muted-2: #767d8d;
+      --accent: #d7ff52;
+      --accent-2: #b8ef3d;
+      --line: rgba(255, 255, 255, 0.12);
+      --dark: #101217;
+      --good: #9dffb1;
+      --warning: #ffd56a;
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+    }* { box-sizing: border-box; }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 60px;
-    }
-    .logo {
-      font-size: 32px;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-    }
+html { scroll-behavior: smooth; }
 
-    .hero {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-      margin-bottom: 100px;
-    }
-    h1 {
-      font-size: clamp(42px, 7vw, 68px);
-      line-height: 1.05;
-      letter-spacing: -0.06em;
-      margin: 0 0 24px;
-    }
-    .accent { color: #d7ff52; }
-    .lead {
-      font-size: 22px;
-      color: #c9ccd6;
-      max-width: 520px;
-      margin-bottom: 32px;
-    }
-    .btn {
-      display: inline-block;
-      padding: 16px 28px;
-      border-radius: 16px;
-      font-weight: 700;
-      font-size: 17px;
-      text-decoration: none;
-    }
-    .btn-primary {
-      background: #d7ff52;
-      color: #101217;
-    }
-    .btn-secondary {
-      border: 1px solid rgba(255,255,255,0.3);
-      color: white;
-    }
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(215, 255, 82, 0.13), transparent 34%),
+    radial-gradient(circle at 70% 10%, rgba(113, 126, 255, 0.12), transparent 30%),
+    var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
 
-    .phone {
-      background: linear-gradient(180deg, #1c202f, #12151f);
-      border-radius: 48px;
-      padding: 20px;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
-      max-width: 380px;
-    }
+a { color: inherit; text-decoration: none; }
 
-    section { margin-top: 110px; }
-    h2 {
-      font-size: 42px;
-      line-height: 1.1;
-      letter-spacing: -0.04em;
-      margin-bottom: 20px;
-    }
+.page {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 26px 20px 80px;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
-    }
-    .card {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 24px;
-      padding: 32px;
-    }
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 72px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: 14px 0;
+  backdrop-filter: blur(16px);
+}
 
-    .partners {
-      background: #d7ff52;
-      color: #101217;
-      border-radius: 32px;
-      padding: 48px;
-      margin-top: 100px;
-    }
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 29px;
+  font-weight: 850;
+  letter-spacing: -0.055em;
+}
 
-    footer {
-      margin-top: 120px;
-      padding-top: 40px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      color: #8f95a3;
-      font-size: 15px;
-    }
+.logo-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: var(--accent);
+  color: var(--dark);
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  font-size: 18px;
+}
 
-    @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; }
-      .phone { max-width: 100%; }
-    }
+nav {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  color: #d9dce5;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+nav a { opacity: 0.88; }
+nav a:hover { opacity: 1; }
+
+.header-cta {
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(215, 255, 82, 0.12);
+  border: 1px solid rgba(215, 255, 82, 0.35);
+  color: var(--accent);
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
+  gap: 58px;
+  align-items: center;
+  margin-bottom: 98px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 13px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--line);
+  color: #dfe3ec;
+  font-size: 14px;
+  font-weight: 650;
+  margin-bottom: 22px;
+}
+
+.eyebrow-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 22px rgba(215, 255, 82, 0.75);
+}
+
+h1 {
+  font-size: clamp(42px, 6.8vw, 76px);
+  line-height: 0.98;
+  letter-spacing: -0.075em;
+  margin: 0 0 24px;
+  max-width: 790px;
+}
+
+.accent { color: var(--accent); }
+
+.lead {
+  font-size: clamp(18px, 2.1vw, 22px);
+  color: #c7ccd8;
+  max-width: 650px;
+  margin: 0 0 34px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 34px 0 20px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 52px;
+  padding: 15px 23px;
+  border-radius: 16px;
+  font-weight: 800;
+  font-size: 16px;
+  transition: transform .15s ease, background .15s ease, border-color .15s ease;
+}
+
+.btn:hover { transform: translateY(-1px); }
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--dark);
+  box-shadow: 0 16px 40px rgba(215, 255, 82, 0.18);
+}
+
+.btn-primary:hover { background: var(--accent-2); }
+
+.btn-secondary {
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.trust-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 30px;
+  max-width: 720px;
+}
+
+.trust-item {
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.05);
+  border-radius: 18px;
+  padding: 16px;
+  min-height: 112px;
+}
+
+.trust-item strong {
+  display: block;
+  font-size: 24px;
+  line-height: 1.1;
+  margin-bottom: 6px;
+  letter-spacing: -0.04em;
+}
+
+.trust-item span {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.phone-wrap {
+  position: relative;
+  justify-self: center;
+}
+
+.phone-glow {
+  position: absolute;
+  inset: 12% -14% 8%;
+  background: rgba(215, 255, 82, 0.14);
+  filter: blur(70px);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.phone {
+  width: min(420px, 100%);
+  background: linear-gradient(180deg, #222737, #11141f);
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 52px;
+  padding: 14px;
+  box-shadow: var(--shadow);
+}
+
+.screen {
+  background: #f8f6f2;
+  border-radius: 40px;
+  min-height: 650px;
+  overflow: hidden;
+  color: #141414;
+  position: relative;
+}
+
+.screen-top {
+  height: 82px;
+  padding: 24px 22px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.screen-title {
+  font-size: 19px;
+  font-weight: 850;
+  letter-spacing: -0.04em;
+}
+
+.screen-pill {
+  background: #111;
+  color: white;
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.match-card {
+  margin: 8px 18px;
+  background: white;
+  border-radius: 26px;
+  padding: 14px;
+  box-shadow: 0 12px 34px rgba(0,0,0,.11);
+}
+
+.product-img {
+  height: 248px;
+  border-radius: 20px;
+  background:
+    linear-gradient(145deg, rgba(95,77,61,.15), rgba(255,255,255,.35)),
+    linear-gradient(135deg,#d5c4ad 0%, #8f7a63 46%, #4f4337 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hanger {
+  position: absolute;
+  width: 148px;
+  height: 186px;
+  border-radius: 70px 70px 18px 18px;
+  background: rgba(255,255,255,.22);
+  border: 1px solid rgba(255,255,255,.45);
+  left: 50%;
+  bottom: -16px;
+  transform: translateX(-50%);
+  backdrop-filter: blur(4px);
+}
+
+.match-score {
+  position: absolute;
+  right: 13px;
+  top: 13px;
+  background: var(--accent);
+  color: #111;
+  font-weight: 900;
+  border-radius: 999px;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.product-name {
+  font-size: 18px;
+  font-weight: 850;
+  letter-spacing: -0.035em;
+  margin: 15px 2px 4px;
+}
+
+.product-meta {
+  color: #60636b;
+  font-size: 13.5px;
+  line-height: 1.42;
+  margin: 0 2px 12px;
+}
+
+.reason-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.reason {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #222;
+  background: #f3f1ec;
+  border-radius: 13px;
+  padding: 9px 10px;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.reason-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #111;
+  flex: 0 0 auto;
+}
+
+.screen-bottom {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 12px 18px 18px;
+}
+
+.mini-product {
+  height: 78px;
+  border-radius: 18px;
+  background: #ece8df;
+  border: 1px solid rgba(0,0,0,.04);
+}
+
+section { margin-top: 112px; }
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+  margin-bottom: 30px;
+}
+
+h2 {
+  font-size: clamp(32px, 4.2vw, 50px);
+  line-height: 1.05;
+  letter-spacing: -0.055em;
+  margin: 0;
+  max-width: 820px;
+}
+
+.section-desc {
+  color: var(--muted);
+  font-size: 18px;
+  max-width: 640px;
+  margin: 16px 0 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+}
+
+.card h3 {
+  margin: 0 0 10px;
+  font-size: 22px;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+}
+
+.card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.step-number {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--accent);
+  color: var(--dark);
+  font-weight: 900;
+  margin-bottom: 18px;
+}
+
+.b2b {
+  border-radius: 38px;
+  padding: 54px;
+  background:
+    radial-gradient(circle at right top, rgba(215,255,82,.23), transparent 32%),
+    linear-gradient(180deg, rgba(255,255,255,.105), rgba(255,255,255,.06));
+  border: 1px solid rgba(255,255,255,.14);
+}
+
+.b2b-layout {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 34px;
+  align-items: start;
+  margin-top: 34px;
+}
+
+.b2b-panel {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 28px;
+  padding: 26px;
+}
+
+.check-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 13px;
+}
+
+.check-list li {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 10px;
+  color: #dfe3ec;
+  font-size: 16px;
+}
+
+.check-list li:before {
+  content: "✓";
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(215,255,82,.18);
+  color: var(--accent);
+  font-weight: 900;
+  font-size: 14px;
+  margin-top: 1px;
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.metric {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 20px;
+  padding: 18px;
+}
+
+.metric strong {
+  display: block;
+  font-size: 28px;
+  letter-spacing: -0.05em;
+  line-height: 1.1;
+  color: var(--accent);
+  margin-bottom: 5px;
+}
+
+.metric span {
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.35;
+}
+
+.integration {
+  background: #f4f7e7;
+  color: #101217;
+  border-radius: 38px;
+  padding: 54px;
+}
+
+.integration .section-desc { color: #414638; }
+
+.integration-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.integration-card {
+  background: rgba(255,255,255,.72);
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 24px;
+  padding: 22px;
+  min-height: 170px;
+}
+
+.integration-card strong {
+  display: block;
+  font-size: 18px;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  margin-bottom: 8px;
+}
+
+.integration-card span {
+  color: #555b4b;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.pilot {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.pilot-card {
+  border-radius: 30px;
+  padding: 32px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.065);
+}
+
+.pilot-card.highlight {
+  background: var(--accent);
+  color: var(--dark);
+  border-color: transparent;
+}
+
+.pilot-card h3 {
+  margin: 0 0 12px;
+  font-size: 26px;
+  letter-spacing: -0.045em;
+  line-height: 1.1;
+}
+
+.pilot-card p { margin: 0 0 18px; color: var(--muted); }
+.pilot-card.highlight p { color: #303514; }
+
+.plain-list {
+  margin: 0;
+  padding-left: 20px;
+  color: #d5d9e3;
+}
+
+.plain-list li { margin-bottom: 8px; }
+.highlight .plain-list { color: #1d210b; }
+
+.risk-note {
+  margin-top: 24px;
+  padding: 20px 22px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 213, 106, .28);
+  background: rgba(255, 213, 106, .08);
+  color: #ffe7a1;
+  font-size: 15px;
+}
+
+.faq {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+details {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 20px 22px;
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 17px;
+  letter-spacing: -0.02em;
+}
+
+details p {
+  color: var(--muted);
+  margin: 12px 0 0;
+}
+
+.cta-final {
+  margin-top: 112px;
+  border-radius: 42px;
+  padding: 58px;
+  background: linear-gradient(135deg, var(--accent), #efffb5);
+  color: var(--dark);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 28px;
+  align-items: center;
+}
+
+.cta-final h2 { color: var(--dark); }
+.cta-final p { color: #34391a; max-width: 720px; font-size: 18px; }
+
+.btn-dark {
+  background: #101217;
+  color: #fff;
+  white-space: nowrap;
+}
+
+footer {
+  margin-top: 70px;
+  padding-top: 36px;
+  border-top: 1px solid var(--line);
+  color: var(--muted-2);
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.disclaimer {
+  max-width: 820px;
+  color: var(--muted-2);
+}
+
+@media (max-width: 980px) {
+  header { position: static; }
+  nav { display: none; }
+  .hero,
+  .b2b-layout,
+  .pilot,
+  .cta-final { grid-template-columns: 1fr; }
+  .hero { gap: 44px; }
+  .phone-wrap { justify-self: stretch; }
+  .phone { margin: 0 auto; }
+  .grid,
+  .grid-2,
+  .faq { grid-template-columns: 1fr; }
+  .integration-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .trust-row { grid-template-columns: 1fr; }
+  .section-head { display: block; }
+}
+
+@media (max-width: 560px) {
+  .page { padding: 18px 14px 60px; }
+  header { margin-bottom: 44px; }
+  .hero { margin-bottom: 68px; }
+  .hero-actions { display: grid; }
+  .btn { width: 100%; }
+  section { margin-top: 76px; }
+  .b2b,
+  .integration,
+  .cta-final { padding: 30px 20px; border-radius: 28px; }
+  .integration-grid { grid-template-columns: 1fr; }
+  .screen { min-height: 590px; }
+  .product-img { height: 210px; }
+  .metric-grid { grid-template-columns: 1fr; }
+}
+
   </style>
 </head>
 <body>
   <main class="page">
-
     <header>
-      <div class="logo">Modish</div>
-      <nav style="display:flex; gap:24px; font-weight:500;">
-        <a href="#how">Как работает</a>
-        <a href="#partners">Для магазинов</a>
+      <a class="logo" href="#top" aria-label="Modish">
+        <span class="logo-mark">M</span>
+        <span>Modish</span>
+      </a>
+      <nav aria-label="Основная навигация">
+        <a href="#users">Покупателям</a>
+        <a href="#partners">Магазинам</a>
+        <a href="#integration">Интеграция</a>
+        <a href="#pilot" class="header-cta">Запустить пилот</a>
       </nav>
-    </header>
+    </header><section class="hero" id="top" aria-labelledby="hero-title">
+  <div>
+    <div class="eyebrow"><span class="eyebrow-dot"></span> AI-подбор одежды с объяснением каждой рекомендации</div>
+    <h1 id="hero-title">Помогаем людям покупать одежду, которая <span class="accent">им действительно подходит</span></h1>
+    <p class="lead">
+      Modish анализирует параметры внешности, стиль, бюджет и задачу пользователя, затем формирует персональные подборки из подключённых каталогов магазинов и партнёрских витрин.
+    </p>
 
-    <!-- HERO -->
-    <div class="hero">
-      <div>
-        <h1>Одежда, которая <span class="accent">реально вам идёт</span></h1>
-        <p class="lead">
-          Загружаете два фото — Modish анализирует вашу фигуру, цветотип и стиль, 
-          и показывает вещи из Wildberries, Ozon и Lamoda, которые хорошо сидят и выглядят на вас.
-        </p>
-        
-        <div style="margin: 32px 0;">
-          <a href="#" class="btn btn-primary">Попробовать бесплатно</a>
-          <a href="#partners" class="btn btn-secondary" style="margin-left:12px;">Для магазинов</a>
+    <div class="hero-actions">
+      <a href="#pilot" class="btn btn-primary">Обсудить пилот с магазином</a>
+      <a href="#users" class="btn btn-secondary">Как это работает для покупателя</a>
+    </div>
+
+    <div class="trust-row" aria-label="Ключевые принципы Modish">
+      <div class="trust-item">
+        <strong>CPS / CPA</strong>
+        <span>Оплата за результат или тестовый пилот без сложной интеграции.</span>
+      </div>
+      <div class="trust-item">
+        <strong>Без хранения фото</strong>
+        <span>Для персонализации можно хранить только параметры анализа и предпочтения.</span>
+      </div>
+      <div class="trust-item">
+        <strong>Не маркетплейс</strong>
+        <span>Покупатель переходит в магазин. Продажа остаётся на стороне партнёра.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="phone-wrap" aria-label="Пример интерфейса Modish">
+    <div class="phone-glow"></div>
+    <div class="phone">
+      <div class="screen">
+        <div class="screen-top">
+          <div class="screen-title">Ваши рекомендации</div>
+          <div class="screen-pill">92% match</div>
         </div>
 
-        <p style="color:#a0a5b8; font-size:15px;">
-          Уже более 1200 человек протестировали рекомендации
-        </p>
-      </div>
-
-      <!-- Мокап телефона -->
-      <div class="phone">
-        <div style="background:#f8f6f3; border-radius:32px; padding:20px; height:620px; position:relative; overflow:hidden;">
-          <!-- Здесь можно вставить реальный скриншот позже -->
-          <div style="background:#e5e0d8; height:520px; border-radius:20px; margin-top:40px; padding:20px;">
-            <div style="background:white; border-radius:16px; padding:12px; box-shadow:0 4px 20px rgba(0,0,0,0.1);">
-              <div style="height:180px; background:linear-gradient(135deg,#d4c3b0,#6b5c4a); border-radius:12px; margin-bottom:12px;"></div>
-              <div style="font-weight:700; font-size:17px;">Бежевый oversize жакет</div>
-              <div style="color:#666; font-size:14px;">Отлично балансирует пропорции • Ваш цветотип</div>
-            </div>
+        <div class="match-card">
+          <div class="product-img">
+            <div class="match-score">Подходит</div>
+            <div class="hanger"></div>
           </div>
+          <div class="product-name">Жакет прямого кроя</div>
+          <p class="product-meta">Балансирует пропорции, подходит к выбранному бюджету и хорошо сочетается с базовым гардеробом.</p>
+          <div class="reason-list">
+            <div class="reason"><span class="reason-dot"></span> Подходит по силуэту</div>
+            <div class="reason"><span class="reason-dot"></span> Совместим с цветовой палитрой</div>
+            <div class="reason"><span class="reason-dot"></span> Есть объяснение перед покупкой</div>
+          </div>
+        </div>
+
+        <div class="screen-bottom">
+          <div class="mini-product"></div>
+          <div class="mini-product"></div>
+          <div class="mini-product"></div>
         </div>
       </div>
     </div>
+  </div>
+</section>
 
-    <!-- Как работает -->
-    <section id="how">
-      <h2>Как это работает</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>1. Быстрый старт</h3>
-          <p>Загружаете два фото (лицо + в полный рост) и отвечаете на несколько простых вопросов о стиле и бюджете.</p>
-        </div>
-        <div class="card">
-          <h3>2. Персональные рекомендации</h3>
-          <p>Modish анализирует вашу фигуру, цветотип и предпочтения, после чего показывает только подходящие вещи из реальных магазинов.</p>
-        </div>
-        <div class="card">
-          <h3>3. Покупка без сомнений</h3>
-          <p>Переходите по ссылке в магазин и покупаете. Мы получаем комиссию только если вы совершили покупку.</p>
-        </div>
-      </div>
-    </section>
+<section id="users">
+  <div class="section-head">
+    <div>
+      <h2>Покупатель получает не просто карточки, а понятный выбор</h2>
+      <p class="section-desc">Главная задача Modish — сократить путь от сомнения к покупке: показать подходящие вещи и объяснить, почему они подходят конкретному человеку.</p>
+    </div>
+  </div>
 
-    <!-- Преимущества -->
-    <section>
-      <h2>Почему пользователи выбирают Modish</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>Меньше возвратов</h3>
-          <p>Рекомендуем вещи, которые с высокой вероятностью хорошо сядут и будут носиться.</p>
-        </div>
-        <div class="card">
-          <h3>Экономия времени</h3>
-          <p>Вместо часов поиска в маркетплейсах — готовая персональная подборка за минуту.</p>
-        </div>
-        <div class="card">
-          <h3>Уверенность в покупке</h3>
-          <p>Каждая рекомендация сопровождается понятным объяснением, почему эта вещь вам подойдёт.</p>
-        </div>
-      </div>
-    </section>
+  <div class="grid">
+    <div class="card">
+      <div class="step-number">1</div>
+      <h3>Профиль внешности и стиля</h3>
+      <p>Пользователь указывает параметры, бюджет, предпочтения и может пройти фото-анализ для более точных рекомендаций.</p>
+    </div>
+    <div class="card">
+      <div class="step-number">2</div>
+      <h3>Подбор из реальных каталогов</h3>
+      <p>Система сопоставляет товары с фигурой, цветовой палитрой, стилем, размерностью, сезоном и сценарием покупки.</p>
+    </div>
+    <div class="card">
+      <div class="step-number">3</div>
+      <h3>Переход к партнёру</h3>
+      <p>Покупка происходит в магазине или маркетплейсе партнёра. Modish не забирает оформление заказа на себя.</p>
+    </div>
+  </div>
+</section>
 
-    <!-- Для партнёров -->
-    <section id="partners" class="partners">
-      <h2 style="color:#101217;">Для магазинов и брендов</h2>
-      <p style="font-size:19px; max-width:800px;">
-        Modish — это персональный слой рекомендаций над вашим каталогом. 
-        Мы показываем ваши товары только тем людям, которым они с большой вероятностью подойдут.
-      </p>
-      <ul style="font-size:17px; line-height:1.7; color:#222;">
-        <li>Целевой трафик пользователей, готовых купить одежду</li>
-        <li>Модель CPS — вы платите только за подтверждённые покупки</li>
-        <li>Снижение процента возвратов благодаря точному подбору</li>
-        <li>Прозрачная статистика и качество трафика</li>
+<section>
+  <div class="section-head">
+    <div>
+      <h2>Почему это может быть интересно магазинам</h2>
+      <p class="section-desc">Обычная реклама приводит клики. Modish старается приводить пользователей с уже сформированным намерением купить конкретный тип вещи.</p>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Более тёплый трафик</h3>
+      <p>Пользователь приходит не из случайного баннера, а после персонального подбора под фигуру, стиль, бюджет и ситуацию.</p>
+    </div>
+    <div class="card">
+      <h3>Меньше лишних показов</h3>
+      <p>Товары показываются не всем подряд, а тем пользователям, для которых они потенциально релевантны.</p>
+    </div>
+    <div class="card">
+      <h3>Аргумент перед покупкой</h3>
+      <p>У каждой рекомендации есть объяснение. Это снижает неопределённость: пользователь понимает, зачем ему эта вещь.</p>
+    </div>
+    <div class="card">
+      <h3>Партнёр контролирует продажу</h3>
+      <p>Оплата, доставка, возвраты, клиентская база и заказ остаются на стороне магазина или маркетплейса.</p>
+    </div>
+  </div>
+</section>
+
+<section id="partners" class="b2b">
+  <div class="eyebrow"><span class="eyebrow-dot"></span> Для магазинов, брендов и партнёрских сетей</div>
+  <h2>Modish — дополнительный канал продаж, а не конкурент вашему магазину</h2>
+  <p class="section-desc">Мы не просим передавать клиентскую базу, не забираем оплату и не меняем вашу воронку. Наша задача — привести в ваш каталог пользователя, которому товар подходит лучше, чем случайная выдача.</p>
+
+  <div class="b2b-layout">
+    <div class="b2b-panel">
+      <h3 style="margin:0 0 18px; font-size:26px; letter-spacing:-0.045em;">Что получает партнёр</h3>
+      <ul class="check-list">
+        <li>Трафик с персональным намерением покупки</li>
+        <li>Переходы на конкретные карточки товаров</li>
+        <li>UTM-разметку, postback или партнёрскую атрибуцию</li>
+        <li>Тест через ограниченную категорию или капсулу товаров</li>
+        <li>Отчётность по кликам, переходам, конверсиям и качеству подбора</li>
       </ul>
-      <p style="margin-top:32px;">
-        <strong>Готовы к сотрудничеству:</strong> contact@modish.ai
-      </p>
-    </section>
+    </div>
 
-    <footer>
-      <div>© 2026 Modish. Персональные рекомендации одежды.</div>
-      <div>Проект в активной разработке</div>
-    </footer>
-
-  </main>
-</body>
-</html>
+    <div class="b2b-panel">
+      <h3 style="margin:0 0 18px; font-size:26px; letter-spacing:-0.045em;">Что можно измерять в пилоте</h3>
+      <div class="metric-grid">
+        <div class="metric">
+          <strong>CTR</strong>
+          <span>Переходы из персональной рекомендации в карточку товара.</span>
+        </div>
+        <div class="metric">
+          <strong>CR</strong>
+          <span>Конверсия из перехода в покупку при наличии атрибуции.</span>
+        </div>
+        <div class="metric">
+          <strong>AOV</strong>
+          <span>Ср
